@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import Sidebar from "./components/sidebar/Sidebar";
+import PengelolaanMain from "./components/main/pengelolaan/PengelolaanMain";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex h-screen max-h-screen overflow-auto">
+      <div className="basis-1/6 shrink-0">
+        <Sidebar />
+      </div>
+      <div className="grow h-full overflow-auto">
+        <PengelolaanMain />
+      </div>
     </div>
   );
 }

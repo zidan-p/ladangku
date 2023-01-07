@@ -1,6 +1,24 @@
 import { useState } from "react";
 import DateList from "./DateList";
-import { add, sub } from 'date-fns'
+import { add, sub, setDate, isSunday } from 'date-fns'
+
+const Months = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "Novermber",
+    "Desember"
+]
+
+const DAY_IN_MILIS = 24 * 60 * 60 * 1000;
+
 
 
 
@@ -15,7 +33,6 @@ export default function Kalender(){
     };
 
     const setMonth = (direction = "") => {
-        let actv = activeDate
         switch(direction){
             case "next":
                 setActiveDate(add(activeDate, {months: 1}));
@@ -27,23 +44,25 @@ export default function Kalender(){
     }
 
     const calculateDays = (date = new Date()) =>{ // date adalah tanggal dari ini diasumsikan
+
+        
         let thisDate = date;
         if(date === null || date === "" || date === 0){
             thisDate = new Date();
         }
-        console.log(thisDate);
-        let dateCount = new Date(thisDate.getFullYear(), thisDate.getMonth(), 0).getDate(); //jumlah hari bulan target
+        let dateCount = new Date(thisDate.getFullYear(), thisDate.getMonth(), 0); //jumlah hari bulan target
         let dateCollection = []
 
+        console.log("hasil date count"+dateCount.toString());
+
         //seimbangakn dengan hari dalam seminggu
-        const DAY_IN_MILIS = 24 * 60 * 60 * 1000;
-        if(new Date(dateCount + DAY_IN_MILIS).getDay() !== 0){
-            for(let i = 0; i < new Date(dateCount + DAY_IN_MILIS).getDay(); i++){
-                dateCollection.push(
-                    <div></div>
-                )
-            }
-        }
+        // if(!isSunday(dateCount)){
+        //     for(let i = 0; i < dateCount.getDay(); i++){
+        //         dateCollection.push(
+        //             <div></div>
+        //         )
+        //     }
+        // }
         
         //masukan tanggal
         for(let i = 0; i < dateCount; i++){
@@ -68,7 +87,7 @@ export default function Kalender(){
     return(
         <div className="w-full bg-white min-h-[11rem] pb-2">
             <div className="flex justify-between p-3 px-4">
-                <h3 className="text-base font-bold">{activeDate.getMonth()}</h3>
+                <h3 className="text-base font-bold">{activeDate.getFullYear()} {Months[activeDate.getMonth()]}</h3>
                 <div className="inline-flex">
                 <button onClick={()=>setMonth("prev")}>
                     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" >

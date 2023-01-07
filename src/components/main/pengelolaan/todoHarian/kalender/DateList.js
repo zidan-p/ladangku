@@ -4,10 +4,10 @@
 export default function DateList(props){
 
     const checkActive = () => {
-        console.log(
-            props.date,
-            props.activeDate
-        )
+        // console.log(
+        //     props.date,
+        //     props.activeDate
+        // )
         if(!props.date || !props.activeDate)return false
 
         if(props.date.getTime() == props.activeDate.getTime()){

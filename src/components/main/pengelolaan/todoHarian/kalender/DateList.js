@@ -1,35 +1,26 @@
+import cn from "../../../../../utils/calendar/cn"
 
 
-
-export default function DateList(props){
-
-    const checkActive = () => {
-        // console.log(
-        //     props.date,
-        //     props.activeDate
-        // )
-        if(!props.date || !props.activeDate)return false
-
-        if(props.date.getTime() == props.activeDate.getTime()){
-            return true
-        };
-        return false;
-    }
+export default function DateList({data : {date, currentMonth, today}, selected, onSelect}){
 
     return (
-        <div 
+        <h1
             onClick={()=>{
-                props.onChangeActive(props.date)
+                onSelect(date)
             }}
             className={`
                 py-3 text-center transition-all 
-                hover rounded hover:bg-green-100
-                ${checkActive() ? "bg-green-200" : ""}
+                hover rounded-sm hover:bg-green-100
                 active:bg-green-300 select-none
-                cursor-pointer
+                cursor-pointer box-border
+                ${cn(
+                    currentMonth ? "" : "text-gray-500",
+                    today ? "border-2 border-gray-400" : "",
+                    selected ?  "bg-green-200" : ""
+                )}
             `}
-            >
-            {props.children}
-        </div>
+                >
+                {date.getDate()}
+            </h1>
     )
 }

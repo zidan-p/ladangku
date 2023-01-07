@@ -1,7 +1,7 @@
 
 
 
-export default function TimeLine(){
+export default function TimeLine(props){
 
     return (
         <div>
@@ -9,12 +9,18 @@ export default function TimeLine(){
             <div 
                 className="flex font-light text-gray-500 border-b"
                 style={{
-                    "borderImage":"linear-gradient(90deg, #166534 50%, #e5e7eb 50%) 1"
+                    "borderImage":`linear-gradient(90deg, #166534 ${props.percent}%, #e5e7eb 0 100%) 1`
+                    // "borderImage":`linear-gradient(90deg, #166534 ${props.percent}%, #e5e7eb ${100-(props.percent)}%) 1`
+                    // "borderImage":`linear-gradient(90deg, #166534 50%, #e5e7eb 50%) 1`
                 }}
                 >
                 <p>15 Maret 2022</p>
                 <div className="grow mx-2">
-                    <p className="text-right w-[50%]">7 April 2022</p>
+                    <p
+                        style={{
+                            "width" : `${props.percent}%`
+                        }}
+                    className="text-right">7 April 2022</p>
                 </div>
                 <p>15 Juni 2022</p>
             </div>

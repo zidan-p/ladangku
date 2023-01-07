@@ -13,6 +13,7 @@ export default function TabList(props){
                     ? "border-b-2 border-b-green-400"
                     : "text-gray-500"
                 }
+                whitespace-nowrap
                 `}>
             {props.children}
         </li>

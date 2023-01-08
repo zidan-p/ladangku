@@ -43,9 +43,10 @@ export default function TabLadang(props){
                     </ul>
                 </div>
                 <button 
+                    onClick={()=>props.onShowAddLadang()}
                     className="
                         inline-flex items-center gap-2 transition-all border-b-2 border-b-transparent hover:border-b-yellow-500
-                        active:text-gray-700 active:border-b-yellow-400 shrink-0"
+                        active:text-gray-700 active:border-b-yellow-400 shrink-0 p-1"
                     >
                     <svg className="h-5" xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                         <circle cx={12} cy={12} r={10} />

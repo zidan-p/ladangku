@@ -10,8 +10,6 @@ export default function TimeLine(props){
                 className="flex font-light text-gray-500 border-b"
                 style={{
                     "borderImage":`linear-gradient(90deg, #166534 ${props.percent}%, #e5e7eb 0 100%) 1`
-                    // "borderImage":`linear-gradient(90deg, #166534 ${props.percent}%, #e5e7eb ${100-(props.percent)}%) 1`
-                    // "borderImage":`linear-gradient(90deg, #166534 50%, #e5e7eb 50%) 1`
                 }}
                 >
                 <p>15 Maret 2022</p>

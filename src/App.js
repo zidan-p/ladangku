@@ -7,7 +7,7 @@ function App() {
       <div className="basis-1/6 shrink-0">
         <Sidebar />
       </div>
-      <div className="grow h-full overflow-auto">
+      <div className="grow h-full overflow-x-auto overflow-y-hidden">
         <PengelolaanMain />
       </div>
     </div>

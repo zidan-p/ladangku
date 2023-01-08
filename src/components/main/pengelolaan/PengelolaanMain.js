@@ -4,7 +4,6 @@ import ProfileLadang from "./profileLadang/Profileladang"
 import JenisTumbuhan from "./jenisTumbuhan/JenisTumbuhan"
 import TimeLine from "./timeLine/TimeLine"
 import TodoHarian from "./todoHarian/todoHarian"
-import { formatISODuration } from "date-fns"
 import { useEffect, useState } from "react"
 import { generateProfileData } from "../../../utils/ladang/profileLadang"
 import { calculatePercent } from "../../../utils/timeLine"
@@ -13,44 +12,43 @@ import Emptyladang from "./emptyLadang/emptyLadang"
 import LadangOperation from "./ladangOperation/LadangOperation"
 import Hapusladang from "./hapusladang/hapusLadang"
 
-// const ladangList = [
-//     {
-//         id      : 1,
-//         profile : {
-//             name            : "ladang bawang",
-//             luasLadang      : 12000,
-//             tanggalTanam    : new Date(2022, 10, 12),
-//             banyakTanaman   : 30000,
-//             umurPanen       : {months: 3},
-//             jenisKomoditas  : "bawang merah"
+const ladangList = [
+    {
+        id      : 1,
+        profile : {
+            name            : "ladang bawang",
+            luasLadang      : 12000,
+            tanggalTanam    : new Date(2022, 10, 12),
+            banyakTanaman   : 30000,
+            umurPanen       : {months: 3},
+            jenisKomoditas  : "bawang merah"
 
-//         }        
-//     },
-//     {
-//         id      : 2,
-//         profile : {
-//             name            : "ladang sayur",
-//             luasLadang      : 13020,
-//             tanggalTanam    : new Date(2022, 10, 12),
-//             banyakTanaman   : 30000,
-//             umurPanen       : {months: 3},
-//             jenisKomoditas  : "cabai"
-//         }
-//     },
-//     {
-//         id      : 3,
-//         profile : {
-//             name            : "ladang sawah",
-//             luasLadang      : 6000,
-//             tanggalTanam    : new Date(2022, 10, 12),
-//             banyakTanaman   : 30000,
-//             umurPanen       : {months: 3},
-//             jenisKomoditas  : "padi"
-//         }
-//     },
-// ]
+        }        
+    },
+    {
+        id      : 2,
+        profile : {
+            name            : "ladang sayur",
+            luasLadang      : 13020,
+            tanggalTanam    : new Date(2022, 10, 12),
+            banyakTanaman   : 30000,
+            umurPanen       : {months: 3},
+            jenisKomoditas  : "cabai"
+        }
+    },
+    {
+        id      : 3,
+        profile : {
+            name            : "ladang sawah",
+            luasLadang      : 6000,
+            tanggalTanam    : new Date(2022, 10, 12),
+            banyakTanaman   : 30000,
+            umurPanen       : {months: 3},
+            jenisKomoditas  : "padi"
+        }
+    },
+]
 
-const ladangList = []
 
 
 

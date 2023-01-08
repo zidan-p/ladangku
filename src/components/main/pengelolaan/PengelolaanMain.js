@@ -9,9 +9,9 @@ import { useEffect, useState } from "react"
 import { generateProfileData } from "../../../utils/ladang/profileLadang"
 import { calculatePercent } from "../../../utils/timeLine"
 import Loader from "./loader/Loader"
-import LoaderLadang from "./loader/LoaderLadang"
 import Emptyladang from "./emptyLadang/emptyLadang"
 import LadangOperation from "./ladangOperation/LadangOperation"
+import Hapusladang from "./hapusladang/hapusLadang"
 
 const ladangList = [
     {
@@ -57,6 +57,7 @@ export default function PengelolaanMain(){
     const [activeLadang, setActiveLadang] = useState(null);
     const [onTransition, setOnTransition] = useState(false);
     const [activeForm, setActiveForm] = useState({active: false, form: ""});
+    const [onDelete, setOnDelete] = useState(false)
 
     useEffect(()=> {
         if(ladangList.length !== 0){
@@ -68,7 +69,8 @@ export default function PengelolaanMain(){
         setOnTransition(true);
         setTimeout(()=>{
             setActiveLadang(ladangList[indexLadang]);
-            setOnTransition(false)
+            setOnTransition(false);
+            setOnDelete(false)
         },350)
     }
     const handleShowAddLadang = () => setActiveForm({
@@ -85,6 +87,21 @@ export default function PengelolaanMain(){
         active  : true,
         form    : "update-ladang"
     })
+    const handleShowDeleteLadang = () => {
+        setOnTransition(true)
+        setTimeout(()=>{
+            setOnTransition(false)
+            setOnDelete(true);
+        },350);
+    }
+
+    const handleCancelDeleteLadang = () => {
+        setOnDelete(false);
+        setOnTransition(true);
+        setTimeout(()=>{
+            setOnTransition(false)
+        },350);
+    }
 
 
 
@@ -94,11 +111,17 @@ export default function PengelolaanMain(){
         return <Loader/>
     }
 
+    
     let ladangContent = (
         <div className={`transition-all relative ${onTransition? "-translate-x-24 opacity-0":""}`}>
             <ProfileLadang profile={generateProfileData(activeLadang.profile)} />
             <section className="p-4 px-12">
-                <JenisTumbuhan tumbuhan={activeLadang.profile.jenisKomoditas} onShowUpdateLadang={handleShowUpdateLadang} />
+                <JenisTumbuhan 
+                tumbuhan={activeLadang.profile.jenisKomoditas} 
+                onShowUpdateLadang={handleShowUpdateLadang} 
+                onShowDeleteLadang={handleShowDeleteLadang}
+                />
+
                 <TimeLine 
                 percent={
                     calculatePercent(
@@ -112,6 +135,10 @@ export default function PengelolaanMain(){
             <TodoHarian idLadang={activeLadang} />
         </div>
     )
+
+    if(onDelete) ladangContent = ""
+
+    
     
     return(
         <>
@@ -129,6 +156,8 @@ export default function PengelolaanMain(){
             />
 
 
+            {/* <Hapusladang /> */}
+            {onDelete ? <Hapusladang onCancel={handleCancelDeleteLadang} idLadang={activeLadang.id}  /> : ""}
             {ladangList.length === 0 
                 ? <Emptyladang />
                 : ladangContent

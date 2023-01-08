@@ -43,14 +43,17 @@ export default function LadangOperation(props){
 
   let content
   let caseBtn
+  let title
   switch(props.form.form){
     case "add-ladang":
       content = <LadangAdd collectData = {collectData}  />
       caseBtn = "add"
+      title   = "Tambah Ladang"
       break
     case "update-ladang":
       content = <LadangUpdate collectData = {collectData} />
-      caseBtn= "update"
+      caseBtn = "update"
+      title   = "Edit ladang"
       break
 
     //disini tempat state direset
@@ -72,7 +75,7 @@ export default function LadangOperation(props){
             <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-left">
               <polyline points="15 18 9 12 15 6" />
             </svg>
-            <h3 className="text-xl font-semibold">Tambah Ladang</h3>
+            <h3 className="text-xl font-semibold">{title}</h3>
           </button>
           <ButonForm onClick={sendData} caseBtn={caseBtn}> {caseBtn} </ButonForm>
         </div>

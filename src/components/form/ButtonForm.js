@@ -35,7 +35,7 @@ export default function ButonForm(props){
     }
 
     return(
-        <button className="inline-flex items-center gap-2 px-8 py-2.5 rounded bg-green-800 text-sm font-light leading-3 text-white">
+        <button onClick={props.onClick} className="inline-flex items-center gap-2 px-8 py-2.5 rounded bg-green-800 text-sm font-light leading-3 text-white">
         {props.children}
         {iconBtn}
         </button>

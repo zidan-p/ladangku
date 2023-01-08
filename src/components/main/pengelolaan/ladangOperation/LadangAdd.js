@@ -5,17 +5,35 @@ import CreateTodoList from "./createTodoList/CreateTodoList"
 
 const arrayFruit = [
     {id: 1, name:"bawang"},
-    {id: 1, name:"sayur"},
-    {id: 1, name:"padi"},
-    {id: 1, name:"mlinjo"},
+    {id: 2, name:"sayur"},
+    {id: 3, name:"padi"},
+    {id: 4, name:"mlinjo"},
 ]
 
 
 export default function LadangAdd(props){
 
   const [formDataLadang, setFormDataLadang] = useState({
-
+    namaLadang    : "",
+    jenisTanaman  : 0,
+    luasLadang    : "",
+    jumlahTanaman : "",
+    varietas      : "",
   })
+
+
+
+  const handleChangeForm = (event) => {
+    const { name, value } = event.target;
+    setFormDataLadang((prevProps) => ({
+      ...prevProps,
+      [name]: value
+    }));
+
+    //kirim ke ladang operation
+    props.collectData("profileladang", formDataLadang);
+  }
+
 
   return(
     <div className="flex max-h-full h-full overflow-y-auto">
@@ -24,28 +42,28 @@ export default function LadangAdd(props){
           <div className="flex flex-col h-5/6 justify-between ">
             <div className>
               <label className="block text-sm text-green-800 mb-2" htmlFor="field">Nama Ladang</label>
-              <input id="field" className="w-full rounded-sm p-2" type="text" />
+              <input onChange={handleChangeForm} id="field" name="namaLadang" className="w-full rounded-sm p-2" type="text" />
             </div>
             <div>
               <label htmlFor="field1" className="block text-sm text-green-800 mb-2">Tanaman</label>
-              <select className="w-full rounded-sm p-2 pr-4" >
-                  <option selected>Choose a country</option>
+              <select onChange={handleChangeForm} name="jenisTanaman" className="w-full rounded-sm p-2 pr-4" >
+                <option value="0">Silahkan dipilih</option>
                   {arrayFruit.map((frt,index) => {
-                      return (<option selecte name={index}>{frt.name}</option>)
+                      return (<option value={frt.id} key={index} name={index}>{frt.name}</option>)
                   })}
               </select>
             </div>
             <div>
               <label htmlFor="field2" className="block text-sm text-green-800 mb-2">Luas Ladang</label>
-              <input type="number" id="field2" className="w-full rounded-sm p-2" />
+              <input onChange={handleChangeForm} name="luasLadang" type="number" id="field2" className="w-full rounded-sm p-2" />
             </div>
             <div>
               <label htmlFor="field3" className="block text-sm text-green-800 mb-2">Banyak Bibit</label>
-              <input type="text" id="field3" className="w-full rounded-sm p-2" />
+              <input onChange={handleChangeForm} name="jumlahTanaman" type="text" id="field3" className="w-full rounded-sm p-2" />
             </div>
             <div>
               <label htmlFor="field4" className="block text-sm text-green-800 mb-2">Varietas</label>
-              <input type="text" id="field4" className="w-full rounded-sm p-2" />
+              <input onChange={handleChangeForm} name="varietas" type="text" id="field4" className="w-full rounded-sm p-2" />
             </div>
           </div>
         </div>
@@ -53,7 +71,7 @@ export default function LadangAdd(props){
       </div>
 
       {/* add todo list */}
-      <CreateTodoList />
+      <CreateTodoList collectData={props.collectData} />
     </div>
   )
 }

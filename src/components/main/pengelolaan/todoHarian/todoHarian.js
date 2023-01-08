@@ -40,8 +40,6 @@ export default function TodoHarian(){
         setSelectedDate(startOfDay(date));
     }
 
-    console.log(getTodoList(selectedDate));
-
     return (
         <section className="flex p-4 px-12">
             <div id="calendar" className="basis-1/2 p-3"> 

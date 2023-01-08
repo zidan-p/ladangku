@@ -2,7 +2,6 @@ import { format } from "date-fns"
 import TodoList from "./TodoList";
 
 export default function Todo({selectedDate, todoList}){
-    console.log(todoList);
 
     return (
         <div className="w-full bg-white min-h-[8rem] ">

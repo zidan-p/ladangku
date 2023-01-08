@@ -33,8 +33,6 @@ export const generateDate = (
         )
     }
 
-    console.log("first", [...arrayOfDate])
-
     //generate curretn date
     for(
         let i = firstDayOfTheMonth.getDate(); 
@@ -72,6 +70,5 @@ export const generateDate = (
         )
     }
 
-    console.log(arrayOfDate)
     return arrayOfDate;
 }

@@ -2,6 +2,7 @@ import { useState } from "react"
 import LadangAdd from "./LadangAdd";
 import LadangUpdate from "./LadangUpdate";
 import ButonForm from "../../../form/ButtonForm";
+import LoaderLadang from "../loader/LoaderLadang";
 
 
 const arrayFruit = [
@@ -14,25 +15,45 @@ const arrayFruit = [
 
 export default function LadangOperation(props){
 
-  const [formDataLadang, setFormDataLadang] = useState({
+  const [currentData, setCurrentData] = useState({});
+  const [isLoading, setLoading] = useState(false);
 
-  })
+
   const handleCloseForm = () => {
-    props.onClose()
-    setFormDataLadang({})
+    setTimeout(()=>{
+      props.onClose()
+      setCurrentData({})
+      setLoading(false);
+    }, 1000);
+    setLoading(true)
   };
+
+
+  const sendData = () => {
+    console.log(currentData);
+    handleCloseForm()
+  }
+
+  const collectData = (key,data) => {
+    setCurrentData(prevProps => ({
+      ...prevProps,
+      [key] : data
+    }))
+  }
 
   let content
   let caseBtn
   switch(props.form.form){
     case "add-ladang":
-      content = <LadangAdd />
+      content = <LadangAdd collectData = {collectData}  />
       caseBtn = "add"
       break
     case "update-ladang":
-      content = <LadangUpdate />
+      content = <LadangUpdate collectData = {collectData} />
       caseBtn= "update"
       break
+
+    //disini tempat state direset
     default:
       content = ""
       caseBtn = ""
@@ -53,9 +74,9 @@ export default function LadangOperation(props){
             </svg>
             <h3 className="text-xl font-semibold">Tambah Ladang</h3>
           </button>
-          <ButonForm caseBtn={caseBtn}> {caseBtn} </ButonForm>
+          <ButonForm onClick={sendData} caseBtn={caseBtn}> {caseBtn} </ButonForm>
         </div>
-        {content}
+        {isLoading ? <LoaderLadang /> : content}
       </div>
     </>
   )

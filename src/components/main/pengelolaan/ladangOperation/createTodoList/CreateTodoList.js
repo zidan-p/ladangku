@@ -12,31 +12,30 @@ export default function CreateTodoList(props) {
 
         setlistTodo([...listTodo, inputRef.current.value]);
         inputRef.current.value = ""
+
+        props.collectData("todoList", listTodo);
+    }
+
+    const handleDeletelist = (index) => {
+        let buffArray = [...listTodo]
+        buffArray.splice(index,1)
+        setlistTodo(buffArray);
     }
 
 
     let todoListBuffer = [];
     if(listTodo.length !== 0){
         todoListBuffer = listTodo.map((todo, i) => {
-            return <ListTodo key={i} index={i} content={todo}  />
+            return <ListTodo key={i} index={i} content={todo} onDelete={handleDeletelist} />
         })
     }
 
+
+
     return (
-        <div className="flex flex-col p-4 max-h-screen overflow-y-auto">
+        <div className="flex grow flex-col p-4 max-h-screen overflow-y-auto">
             <h3 className="text-xl font-semibold inline-flex gap-2 mb-5">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-check-square"
-                >
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="feather feather-check-square">
                     <polyline points="9 11 12 14 22 4"></polyline>
                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                 </svg>
@@ -58,7 +57,7 @@ export default function CreateTodoList(props) {
                     </svg>
                 </button>
             </form>
-            <div className=" overflow-y-auto">
+            <div className="grow overflow-y-auto">
                 <ul className="flex flex-col overflow-y-auto">
                     {todoListBuffer}
                 </ul>

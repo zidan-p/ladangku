@@ -1,12 +1,26 @@
+import { useState } from "react";
 
 
 
 export default function ListTodo(props){
 
+    const [animate, setAnimate] = useState(false)
+
+    function handleDelete(){
+        setTimeout(()=>{
+            setAnimate(false)
+            props.onDelete(props.index);
+        }, 400);
+        setAnimate(true);
+    }
+
     return(
-        <li className="p-1.5 px-2 border-b text-sm border-gray-200 hover:bg-gray-100 flex justify-between">
+        <li className={`transition-all p-1.5 px-2 border-b  ${animate ? "opacity-0 translate-y-10" : "opacity-100"} relative text-sm border-gray-200 hover:bg-gray-100 flex justify-between`}>
           {props.content}
-          <button className="hover:bg-red-300 rounded group">
+          <button 
+          onClick={() => handleDelete()}
+          className="hover:bg-red-300 rounded group"
+          >
             <svg
               className="w-5 group-hover:stroke-red-700"
               xmlns="http://www.w3.org/2000/svg"

@@ -75,10 +75,12 @@ export default function PengelolaanMain(){
         active  : true, 
         form    : "add-ladang"
     })
-    const handleCloseForm = () => setActiveForm({
-        active  : false, 
-        form    : ""
-    })
+    const handleCloseForm = () =>{
+        setActiveForm({
+            active  : false, 
+            form    : ""
+        })
+    }
     const handleShowUpdateLadang = () => setActiveForm({
         active  : true,
         form    : "update-ladang"

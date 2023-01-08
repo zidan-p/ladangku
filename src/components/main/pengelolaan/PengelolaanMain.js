@@ -6,7 +6,7 @@ import TimeLine from "./timeLine/TimeLine"
 import TodoHarian from "./todoHarian/todoHarian"
 import { formatISODuration } from "date-fns"
 import { useEffect, useState } from "react"
-import { generateProfileData } from "../../../utils/profileLadang/profileLadang"
+import { generateProfileData } from "../../../utils/ladang/profileLadang"
 import { calculatePercent } from "../../../utils/timeLine"
 import Loader from "./loader/Loader"
 import LoaderLadang from "./loader/LoaderLadang"
@@ -56,7 +56,7 @@ export default function PengelolaanMain(){
 
     const [activeLadang, setActiveLadang] = useState(null);
     const [onTransition, setOnTransition] = useState(false);
-    const [activeForm, setActiveForm] = useState(false);
+    const [activeForm, setActiveForm] = useState({active: false, form: ""});
 
     useEffect(()=> {
         if(ladangList.length !== 0){
@@ -71,8 +71,19 @@ export default function PengelolaanMain(){
             setOnTransition(false)
         },350)
     }
-    const handleShowAddLadang = () => setActiveForm(true)
-    const handleHideAddladang = () => setActiveForm(false)
+    const handleShowAddLadang = () => setActiveForm({
+        active  : true, 
+        form    : "add-ladang"
+    })
+    const handleCloseForm = () => setActiveForm({
+        active  : false, 
+        form    : ""
+    })
+    const handleShowUpdateLadang = () => setActiveForm({
+        active  : true,
+        form    : "update-ladang"
+    })
+
 
 
 
@@ -85,7 +96,7 @@ export default function PengelolaanMain(){
         <div className={`transition-all relative ${onTransition? "-translate-x-24 opacity-0":""}`}>
             <ProfileLadang profile={generateProfileData(activeLadang.profile)} />
             <section className="p-4 px-12">
-                <JenisTumbuhan tumbuhan={activeLadang.profile.jenisKomoditas} />
+                <JenisTumbuhan tumbuhan={activeLadang.profile.jenisKomoditas} onShowUpdateLadang={handleShowUpdateLadang} />
                 <TimeLine 
                 percent={
                     calculatePercent(
@@ -122,7 +133,7 @@ export default function PengelolaanMain(){
             }
 
         </main>
-        <LadangOperation active={activeForm} onClose={handleHideAddladang} />
+        <LadangOperation form={activeForm}  onClose={handleCloseForm} />
         </>
     )
 }

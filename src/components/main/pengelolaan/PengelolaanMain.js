@@ -13,42 +13,44 @@ import Emptyladang from "./emptyLadang/emptyLadang"
 import LadangOperation from "./ladangOperation/LadangOperation"
 import Hapusladang from "./hapusladang/hapusLadang"
 
-const ladangList = [
-    {
-        id      : 1,
-        profile : {
-            name            : "ladang bawang",
-            luasLadang      : 12000,
-            tanggalTanam    : new Date(2022, 10, 12),
-            banyakTanaman   : 30000,
-            umurPanen       : {months: 3},
-            jenisKomoditas  : "bawang merah"
+// const ladangList = [
+//     {
+//         id      : 1,
+//         profile : {
+//             name            : "ladang bawang",
+//             luasLadang      : 12000,
+//             tanggalTanam    : new Date(2022, 10, 12),
+//             banyakTanaman   : 30000,
+//             umurPanen       : {months: 3},
+//             jenisKomoditas  : "bawang merah"
 
-        }        
-    },
-    {
-        id      : 2,
-        profile : {
-            name            : "ladang sayur",
-            luasLadang      : 13020,
-            tanggalTanam    : new Date(2022, 10, 12),
-            banyakTanaman   : 30000,
-            umurPanen       : {months: 3},
-            jenisKomoditas  : "cabai"
-        }
-    },
-    {
-        id      : 3,
-        profile : {
-            name            : "ladang sawah",
-            luasLadang      : 6000,
-            tanggalTanam    : new Date(2022, 10, 12),
-            banyakTanaman   : 30000,
-            umurPanen       : {months: 3},
-            jenisKomoditas  : "padi"
-        }
-    },
-]
+//         }        
+//     },
+//     {
+//         id      : 2,
+//         profile : {
+//             name            : "ladang sayur",
+//             luasLadang      : 13020,
+//             tanggalTanam    : new Date(2022, 10, 12),
+//             banyakTanaman   : 30000,
+//             umurPanen       : {months: 3},
+//             jenisKomoditas  : "cabai"
+//         }
+//     },
+//     {
+//         id      : 3,
+//         profile : {
+//             name            : "ladang sawah",
+//             luasLadang      : 6000,
+//             tanggalTanam    : new Date(2022, 10, 12),
+//             banyakTanaman   : 30000,
+//             umurPanen       : {months: 3},
+//             jenisKomoditas  : "padi"
+//         }
+//     },
+// ]
+
+const ladangList = []
 
 
 
@@ -57,7 +59,7 @@ export default function PengelolaanMain(){
     const [activeLadang, setActiveLadang] = useState(null);
     const [onTransition, setOnTransition] = useState(false);
     const [activeForm, setActiveForm] = useState({active: false, form: ""});
-    const [onDelete, setOnDelete] = useState(false)
+    const [onDelete, setOnDelete] = useState(false);
 
     useEffect(()=> {
         if(ladangList.length !== 0){
@@ -103,38 +105,53 @@ export default function PengelolaanMain(){
         },350);
     }
 
+    const handleDeleteLadang = (id) => {
+        let indexarr = ladangList.findIndex((arr, i) => arr.id === id);
+        ladangList.splice(indexarr,1)
+        if(ladangList.length !== 0 ){
+            handleChangeLadang(0)
+        }else{
+            setActiveLadang(null)
+        }
+
+    }
 
 
-
-
-    if(activeLadang === null || activeLadang === undefined){
+    if((activeLadang === null || activeLadang === undefined ) && !Array.isArray(ladangList)){
         return <Loader/>
     }
 
-    
-    let ladangContent = (
-        <div className={`transition-all relative ${onTransition? "-translate-x-24 opacity-0":""}`}>
-            <ProfileLadang profile={generateProfileData(activeLadang.profile)} />
-            <section className="p-4 px-12">
-                <JenisTumbuhan 
-                tumbuhan={activeLadang.profile.jenisKomoditas} 
-                onShowUpdateLadang={handleShowUpdateLadang} 
-                onShowDeleteLadang={handleShowDeleteLadang}
-                />
+    let ladangContent
 
-                <TimeLine 
-                percent={
-                    calculatePercent(
-                        activeLadang.profile.tanggalTanam,
-                        new Date(),
-                        activeLadang.profile.umurPanen
-                    )
-                }
-                />
-            </section>
-            <TodoHarian idLadang={activeLadang} />
-        </div>
-    )
+    if(!(ladangList.length === 0)){
+        ladangContent = (
+            <div className={`transition-all relative ${onTransition? "-translate-x-24 opacity-0":""}`}>
+                <ProfileLadang profile={generateProfileData(activeLadang.profile)} />
+                <section className="p-4 px-12">
+                    <JenisTumbuhan
+                    idLadang = {activeLadang.id}
+                    tumbuhan={activeLadang.profile.jenisKomoditas} 
+                    onShowUpdateLadang={handleShowUpdateLadang} 
+                    onShowDeleteLadang={handleShowDeleteLadang}
+                    
+                    />
+                    <TimeLine 
+                    percent={
+                        calculatePercent(
+                            activeLadang.profile.tanggalTanam,
+                            new Date(),
+                            activeLadang.profile.umurPanen
+                        )
+                    }
+                    />
+                </section>
+                <TodoHarian idLadang={activeLadang} />
+            </div>
+        )
+    } else{
+        ladangContent = <Emptyladang />
+    }
+
 
     if(onDelete) ladangContent = ""
 
@@ -157,11 +174,15 @@ export default function PengelolaanMain(){
 
 
             {/* <Hapusladang /> */}
-            {onDelete ? <Hapusladang onCancel={handleCancelDeleteLadang} idLadang={activeLadang.id}  /> : ""}
-            {ladangList.length === 0 
-                ? <Emptyladang />
-                : ladangContent
-            }
+            {onDelete 
+                ? <Hapusladang 
+                    onCancel={handleCancelDeleteLadang} 
+                    idLadang={activeLadang.id} 
+                    onDeleteLadang={handleDeleteLadang}
+                /> 
+                : ""}
+            
+            {ladangContent}
 
         </main>
         <LadangOperation form={activeForm}  onClose={handleCloseForm} />

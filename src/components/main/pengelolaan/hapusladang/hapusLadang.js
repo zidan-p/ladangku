@@ -14,7 +14,7 @@ export default function Hapusladang(props){
                     Batal
                 </button>
                 <button 
-                onClick={()=>props.onDelete(props.idLadang)}
+                onClick={()=>props.onDeleteLadang(props.idLadang)}
                 className="py-1 px-4 bg-red-400 hover:bg-red-300 active:bg-red-500 rounded font-semibold"
                 >
                     Iya

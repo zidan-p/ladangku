@@ -1,6 +1,5 @@
 
 
-
 export default function InputText(props){
     return(
         <div>
@@ -11,6 +10,6 @@ export default function InputText(props){
                 type={props.type ? props.type : "text"}
                 id={props.name} 
                 className="w-full border border-green-400 focus-within:outline-green-100 rounded-sm p-2" />
-        </div>
+        </div> 
     )
 }

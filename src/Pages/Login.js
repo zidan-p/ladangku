@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRef, useState } from "react"
-import InputText from "../components/form/InputText"
+import InputText from "../components/form/Input"
 
 
 export default function Login(){

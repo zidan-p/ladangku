@@ -5,7 +5,7 @@ export default function InputText(props){
         <div>
             <label htmlFor={props.name} className="block text-sm text-green-800 mb-2">{props.children}</label>
             <input 
-                onChange={props.onchange} 
+                onChange={(e)=>props.onChange(e)} 
                 name={props.name} 
                 type={props.type ? props.type : "text"}
                 id={props.name} 

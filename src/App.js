@@ -1,6 +1,9 @@
 import Sidebar from "./components/sidebar/Sidebar";
 import PengelolaanMain from "./components/main/pengelolaan/PengelolaanMain";
 import Login from "./Pages/Login";
+import Main from "./Pages/Main";
+import Signin from "./Pages/Signin";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -12,7 +15,15 @@ function App() {
     //     <PengelolaanMain />
     //   </div>
     // </div>
-        <Login />
+    // <Login />
+
+    <>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
+    </>
   );
 }
 

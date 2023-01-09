@@ -157,9 +157,7 @@ export default function PengelolaanMain(){
     
     return(
         <>
-        <main className="bg-green-50 h-full w-full overflow-y-auto overflow-x-hidden">
-            <Header> Rutinitas penumbuhan ladang </Header>
-
+        <main className="bg-green-50 h-full w-full  overflow-x-hidden">
             <TabLadang 
                 ladangList={
                     ladangList.map((ladang)=>{

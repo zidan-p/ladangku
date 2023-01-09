@@ -30,7 +30,7 @@ export default function Login(){
         let result = await sendLoginData(formDataLogin);
         if(result.success){
             setUserData(result.data);
-            window.location = "/"
+            window.location = "/app/pengelolaan"
         }else{
             handleError()
         }

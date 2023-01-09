@@ -25,7 +25,7 @@ export default function TabLadang(props){
     }
 
     return (
-        <div className="px-12 mb-5 mt-2">
+        <div className="px-12 my-5">
             <div className="flex justify-between border-b gap-3  border-b-gray-300 ">
                 <div className="overflow-auto">
                     <ul className="flex text-sm font-semibold">

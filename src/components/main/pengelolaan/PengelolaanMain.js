@@ -121,7 +121,7 @@ export default function PengelolaanMain(){
 
     let ladangContent
 
-    if(!(ladangList.length === 0)){
+    if(!(ladangList.length === 0) && activeLadang){
         ladangContent = (
             <div className={`transition-all relative ${onTransition? "-translate-x-24 opacity-0":""}`}>
                 <ProfileLadang profile={generateProfileData(activeLadang.profile)} />

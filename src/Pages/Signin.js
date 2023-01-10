@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import InputText from "../components/form/Input"
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { sendSigninData } from "../Service/auth";
+import { checkLogin } from "../features/auth/checkLogin";
 
 
 export default function Signin(){
@@ -15,6 +16,13 @@ export default function Signin(){
         password    : "",
         phone       : ""
     });
+    const [isError, setIsError] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        checkLogin()
+    },[])
 
     const handleChangeForm = (event) => {
         const { name, value } = event.target;
@@ -24,17 +32,19 @@ export default function Signin(){
         }));
     }
 
-    const handleError = () => {}
-    const handleSuccess = () => {}
+    const handleError = () => {
+        setIsError(true)
+    }
+    const handleSuccess = () => {
+        navigate("/login")
+        setIsSuccess(true)
+    }
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
 
         let result = await sendSigninData(formDataSignin);
         if(result.success){
-            setTimeout(() => {
-                window.Location = "/login"
-            }, 500)
             handleSuccess();
         }else{
             handleError()
@@ -47,7 +57,11 @@ export default function Signin(){
             <div className=" min-w-[36rem] mx-auto  flex">
                 <div className="bg-green-700 h-full basis-4"></div>
                 <form onSubmit={(e)=>handleOnSubmit(e)} ref={formRef} action="" className="grow bg-white px-10 p-10 rounded-r-xl">
-                    <h1 className="text-2xl font-semibold py-4 mb-4 border-b">Daftar</h1>
+                    <div className="flex justify-between border-b mb-4 items-center">
+                        <h1 className={`transition-all  text-2xl font-semibold py-4  `}>Daftar</h1>
+                        <h5 className={`transition  ${isSuccess ? "opacity-100" : "opacity-0"} text-green-700 text-lg font-thin`}>Sukses mendaftar</h5>
+                    </div>
+                    {isError && <p className="text-red-800 italic">ada yang salah, mungkin bisa coba dengan kombinasi yang lain</p>}
                     <div className="mb-2.5">
                         <InputText onChange={handleChangeForm} name="first_name" >nama Pertama</InputText>
                     </div>

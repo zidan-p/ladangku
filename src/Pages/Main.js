@@ -17,7 +17,7 @@ export default function Main(){
 
     let title = "";
     switch(window.location.pathname){
-        case "/app":
+        case "/app/pengelolaan":
             title = "Pengelolaan Ladang"
             break;
         case "/app/monitor":

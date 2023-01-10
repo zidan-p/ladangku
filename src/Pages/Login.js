@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import InputText from "../components/form/Input"
-import { Link } from "react-router-dom";
-import { setUserData } from "../utils/auth/dataStorage";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import { setUserData } from "../features/auth/dataStorage";
 import { sendLoginData } from "../Service/auth";
+import { checkLogin } from "../features/auth/checkLogin";
 
 
 export default function Login(){
@@ -13,6 +14,13 @@ export default function Login(){
         email       : "",
         password    : "",
     });
+    const [isError, setIsError] = useState(false)
+    const navigate = useNavigate();
+
+
+    useEffect(()=>{
+        checkLogin()
+    },[])
 
     const handleChangeForm = (event) => {
         const { name, value } = event.target;
@@ -22,7 +30,9 @@ export default function Login(){
         }));
     }
 
-    const handleError = () => {}
+    const handleError = () => {
+        setIsError(true)
+    }
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
@@ -30,7 +40,7 @@ export default function Login(){
         let result = await sendLoginData(formDataLogin);
         if(result.success){
             setUserData(result.data);
-            window.location = "/app/pengelolaan"
+            navigate("/app/pengelolaan")
         }else{
             handleError()
         }
@@ -43,10 +53,11 @@ export default function Login(){
                 <div className="bg-green-700 h-full basis-4"></div>
                 <form onSubmit={(e)=>handleOnSubmit(e)} ref={formRef} action="" className="grow bg-white px-10 p-10 rounded-r-xl">
                     <h1 className="text-2xl font-semibold py-4 mb-4 border-b">Masuk</h1>
+                    { isError ? <p className="text-red-700 italic">email atau password salah</p> : ""}
                     <div className="mb-2.5">
                         <InputText onChange={handleChangeForm} name="email">Email</InputText>
                     </div>
-                    <div className="mb-2.5">
+                    <div className="mb-4">
                         <InputText onChange={handleChangeForm} type="password" name="password">Password</InputText>
                     </div>
                     <div className="flex justify-between items-end">

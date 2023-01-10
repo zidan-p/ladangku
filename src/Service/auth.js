@@ -6,9 +6,14 @@ export async function sendSigninData(data){
     try {
         let {data : result} = await axios.post(url, JSON.stringify(data))
         return {success : true, data : result};
+
+    //catatan untuk ozi, untuk status codeny supaya sesuai dengan kontexnya
     } catch (err) {
         console.error(err);
-        return {success : false, data : []}
+        if(Array.isArray(err.response.data.error)){
+            return {success : true, data : []}
+        }
+        return {success : false, data : err.response.data}
     }
 }
 

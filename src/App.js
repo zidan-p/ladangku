@@ -9,12 +9,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<h1> ini adalah elemen kosong </h1>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<Signin />} />
 
         <Route path="/app" element={<Main />} >
-          <Route path="/pengelolaan" element={<PengelolaanMain />} />
+          <Route path="pengelolaan" element={<PengelolaanMain />} />
         </Route>
       </Routes>
     </>

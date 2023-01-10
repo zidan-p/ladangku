@@ -78,14 +78,14 @@ export async function addLadang(idUser, data, ladangLength){
     let url = "https://aplikasi-ladangku-production.up.railway.app/user/ladang/add?userid="+idUser;
     const {profileLadang, todoList} = data;
 
-    console.log(profileLadang, ladangLength)
-    console.log(generateTodoList(todoList,profileLadang.durasiPanen));
+    console.log(profileLadang, ladangLength, )
+    console.log(generateTodoList(todoList ?? [],profileLadang.durasiPanen));
 
     try {
         let {data : result} = await axios.post(url, JSON.stringify(convertFrontendToBackendLadangFormat(profileLadang)));
         await addKommoditasToLadang(idUser, ladangLength, profileLadang.jenisTanaman);
         console.log(generateTodoList(todoList,profileLadang.durasiPanen));
-        await addTodoListToLadang(idUser, ladangLength, generateTodoList(todoList,profileLadang.durasiPanen))
+        await addTodoListToLadang(idUser, ladangLength, generateTodoList(todoList ?? [],profileLadang.durasiPanen))
 
     } catch (error) {
         console.log(error);

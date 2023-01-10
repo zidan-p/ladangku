@@ -11,59 +11,40 @@ import Loader from "./loader/Loader"
 import Emptyladang from "./emptyLadang/emptyLadang"
 import LadangOperation from "./ladangOperation/LadangOperation"
 import Hapusladang from "./hapusladang/hapusLadang"
-
-const ladangList = [
-    {
-        id      : 1,
-        profile : {
-            name            : "ladang bawang",
-            luasLadang      : 12000,
-            tanggalTanam    : new Date(2022, 10, 12),
-            banyakTanaman   : 30000,
-            umurPanen       : {months: 3},
-            jenisKomoditas  : "bawang merah"
-
-        }        
-    },
-    {
-        id      : 2,
-        profile : {
-            name            : "ladang sayur",
-            luasLadang      : 13020,
-            tanggalTanam    : new Date(2022, 10, 12),
-            banyakTanaman   : 30000,
-            umurPanen       : {months: 3},
-            jenisKomoditas  : "cabai"
-        }
-    },
-    {
-        id      : 3,
-        profile : {
-            name            : "ladang sawah",
-            luasLadang      : 6000,
-            tanggalTanam    : new Date(2022, 10, 12),
-            banyakTanaman   : 30000,
-            umurPanen       : {months: 3},
-            jenisKomoditas  : "padi"
-        }
-    },
-]
+import { getAllLadang } from "../../../Service/pengelolaan/ladang"
+import id from "date-fns/esm/locale/id/index.js"
+import { getLocalValue } from "../../../features/auth/dataStorage"
+import { convertLadangFormat } from "../../../utils/ladang/convertLadangFormat"
 
 
 
 
 export default function PengelolaanMain(){
 
-    const [activeLadang, setActiveLadang] = useState(null);
+    const [ladangList, setLadangList] = useState([])
+    const [activeLadang, setActiveLadang] = useState({});
     const [onTransition, setOnTransition] = useState(false);
     const [activeForm, setActiveForm] = useState({active: false, form: ""});
     const [onDelete, setOnDelete] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(()=> {
-        if(ladangList.length !== 0){
-            setActiveLadang(ladangList[0])
+    useEffect( ()=>{
+        console.log("ladang list seharusnya berubah");
+        let idUser = getLocalValue("user_id");
+        async function setLadangFromFetch(){
+            let result = await getAllLadang(idUser);
+            if(result.success){
+                setLadangList(result.data.map((arr) => convertLadangFormat(arr)));
+                setActiveLadang(ladangList[0]);
+                setIsLoading(false)
+            }else{
+
+            }
+            console.log(result.data.map((arr) => convertLadangFormat(arr)));
+            console.log("ladang list =====>",ladangList);
         }
-    },[])
+        setLadangFromFetch()
+    },[ladangList])
 
     const handleChangeLadang = (indexLadang) => {
         setOnTransition(true);
@@ -105,8 +86,9 @@ export default function PengelolaanMain(){
 
     const handleDeleteLadang = (id) => {
         let indexarr = ladangList.findIndex((arr, i) => arr.id === id);
-        ladangList.splice(indexarr,1)
-        if(ladangList.length !== 0 ){
+        let bufferArr = [...ladangList]
+        bufferArr.splice(indexarr,1)
+        if(bufferArr.length !== 0 ){
             handleChangeLadang(0)
         }else{
             setActiveLadang(null)
@@ -120,7 +102,6 @@ export default function PengelolaanMain(){
     }
 
     let ladangContent
-
     if(!(ladangList.length === 0) && activeLadang){
         ladangContent = (
             <div className={`transition-all relative ${onTransition? "-translate-x-24 opacity-0":""}`}>
@@ -149,12 +130,10 @@ export default function PengelolaanMain(){
     } else{
         ladangContent = <Emptyladang />
     }
-
-
     if(onDelete) ladangContent = ""
 
     
-    
+    if(isLoading ) return <Loader />
     return(
         <>
         <main className="bg-green-50 h-full w-full  overflow-x-hidden">

@@ -18,3 +18,8 @@ export function setUserData(data) {
 export function clearUserData() {
   localStorage.removeItem("userProfile");
 }
+
+
+export function getLocalValue(key){
+  return JSON.parse(localStorage.getItem("userProfile"))[key];
+}

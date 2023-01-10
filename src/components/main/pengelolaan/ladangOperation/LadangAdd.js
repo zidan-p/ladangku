@@ -61,10 +61,6 @@ export default function LadangAdd(props){
               <label htmlFor="field3" className="block text-sm text-green-800 mb-2">Banyak Bibit</label>
               <input onChange={handleChangeForm} name="jumlahTanaman" type="text" id="field3" className="w-full rounded-sm p-2" />
             </div>
-            <div>
-              <label htmlFor="field4" className="block text-sm text-green-800 mb-2">Varietas</label>
-              <input onChange={handleChangeForm} name="varietas" type="text" id="field4" className="w-full rounded-sm p-2" />
-            </div>
           </div>
         </div>
         <InformationField />

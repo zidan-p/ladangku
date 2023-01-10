@@ -37,15 +37,6 @@ export default function InformationField() {
           tumbuh
         </p>
       </div>
-      <div className>
-        <h5 className="text-sm">Varietas tanaman</h5>
-        <p className="text-xs text-gray-500">
-          meski tanamannya sama, tapi belum tentu tipenya juga sama. karena
-          tiap-tiap tanaman memiki tipe varietas yang memiliki ciri khas
-          tersendiri. misal adalah mangga manalagi, mangga arumanis, manggan
-          gendong, dll.
-        </p>
-      </div>
     </div>
   );
 }

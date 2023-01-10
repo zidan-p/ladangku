@@ -7,7 +7,7 @@ export async function getAllLadang(idUser){
     url += idUser;
 
     try {
-        let {data : result} = axios.get(url);
+        let {data : result} = await axios.get(url);
         return {success : true, data : result}
     } catch (error) {
         console.error(error);
@@ -17,18 +17,27 @@ export async function getAllLadang(idUser){
 
 
 export async function addLadangToUser(idUser, data){
+    let {
+        name,
+        kepadatan_tanaman,
+        luas_ladang,
+        tanggal_tanam,
+        perkiraan_panen
+    } = data;
+
     let buffer = {
         name,
         kepadatan_tanaman,
         luas_ladang,
         tanggal_tanam,
         perkiraan_panen
-    } = data
+    } 
+
     let url = "https://aplikasi-ladangku-production.up.railway.app/user/ladang/add?userid="
     url += idUser;
 
     try {
-        let {data : result} = axios.post(url, buffer);
+        let {data : result} = await axios.post(url, buffer);
         return {success : true, data : result}
     } catch (error) {
         console.error(error);

@@ -18,7 +18,7 @@ export default function TimeLine(props){
                         style={{
                             "width" : `${props.percent}%`
                         }}
-                    className="text-right">7 April 2022</p>
+                    className="text-right whitespace-nowrap">7 April 2022</p>
                 </div>
                 <p>15 Juni 2022</p>
             </div>

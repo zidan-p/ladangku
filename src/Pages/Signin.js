@@ -45,6 +45,7 @@ export default function Signin(){
 
         let result = await sendSigninData(formDataSignin);
         if(result.success){
+            console.log(result);
             handleSuccess();
         }else{
             handleError()
@@ -69,13 +70,13 @@ export default function Signin(){
                         <InputText onChange={handleChangeForm} name="last_name">Nama Terakhir</InputText>
                     </div>
                     <div className="mb-2.5">
-                        <InputText onChange={handleChangeForm} name="email">Email</InputText>
+                        <InputText onChange={handleChangeForm} name="email">Email (tidak boleh sama)</InputText>
                     </div>
                     <div className="mb-2.5">
-                        <InputText onChange={handleChangeForm} type="password" name="password">Password</InputText>
+                        <InputText onChange={handleChangeForm} type="password" name="password">Password <span>(gunakan kombinasi angkat dan huruf)</span></InputText>
                     </div>
                     <div className="mb-4">
-                        <InputText onChange={handleChangeForm} name="phone">Nomor Telepon</InputText>
+                        <InputText onChange={handleChangeForm} name="phone">Nomor Telepon (tidak boleh sama)</InputText>
                     </div>
                     <div className="flex justify-between items-end">
                         <button type="submit" className="p-2 px-10 rounded-sm bg-green-800 hover:bg-green-700 active:bg-green-900 text-white rouded">Submit</button>

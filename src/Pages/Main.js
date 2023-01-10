@@ -2,26 +2,29 @@ import { useEffect } from "react";
 import Header from "../components/header/Header";
 import Sidebar from "../components/sidebar/Sidebar";
 import PengelolaanMain from "../components/main/pengelolaan/PengelolaanMain";
-import { redirect, Route, Routes, useNavigate } from "react-router-dom";
+import { Outlet, redirect, Route, Routes, useNavigate } from "react-router-dom";
+import { checkLoged } from "../features/auth/checkLogin";
 
 
 export default function Main(){
 
     useEffect(() => {
+        
         let idUser = JSON.parse(localStorage.getItem("userProfile"));
 
         if(idUser === undefined || idUser === null) redirect("/login")
 
-        
     }, [])
+
+    checkLoged()
 
     let title = "";
     switch(window.location.pathname){
         case "/app/pengelolaan":
             title = "Pengelolaan Ladang"
             break;
-        case "/app/monitor":
-            title = "Monitor Komoditas"
+        case "/app/keuangan":
+            title = "Prediksi Keuangan"
             break
     }
 
@@ -36,7 +39,8 @@ export default function Main(){
                 <Header>
                     {title}
                 </Header>
-                <PengelolaanMain />
+                {/* <PengelolaanMain /> */}
+                <Outlet />
             </div>
         </div>
     )

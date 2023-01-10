@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import InformationField from "./InformationField"
 import CreateTodoList from "./createTodoList/CreateTodoList"
+import { getAllKomoditas } from "../../../../Service/pengelolaan/komoditas"
 
 
 const arrayFruit = [
@@ -15,11 +16,29 @@ export default function LadangAdd(props){
 
   const [formDataLadang, setFormDataLadang] = useState({
     namaLadang    : "",
-    jenisTanaman  : 0,
+    jenisTanaman  : "",
     luasLadang    : "",
     jumlahTanaman : "",
-    varietas      : "",
+    durasiPanen   : "",
   })
+
+  const [komoditas, setKomoditas] = useState([]);
+
+
+  useEffect(()=>{
+    async function getkomoditas(){
+      let result = await getAllKomoditas()
+      if(result.success){
+        setKomoditas(result.data)
+      }
+    }
+    getkomoditas()
+  },[])
+
+  useEffect(() => {
+    //kirim ke ladang operation
+    props.collectData("profileLadang", formDataLadang);
+  },[formDataLadang])
 
 
 
@@ -29,9 +48,11 @@ export default function LadangAdd(props){
       ...prevProps,
       [name]: value
     }));
+  }
 
-    //kirim ke ladang operation
-    props.collectData("profileladang", formDataLadang);
+  const handleChangeDuration = (e) => {
+    console.log(e.target.name)
+    console.log(e.target.value)
   }
 
 
@@ -42,24 +63,28 @@ export default function LadangAdd(props){
           <div className="flex flex-col h-5/6 justify-between ">
             <div className>
               <label className="block text-sm text-green-800 mb-2" htmlFor="field">Nama Ladang</label>
-              <input onChange={handleChangeForm} id="field" name="namaLadang" className="w-full rounded-sm p-2" type="text" />
+              <input onChange={handleChangeForm} value={formDataLadang.namaLadang} id="field" name="namaLadang" className="w-full rounded-sm p-2" type="text" />
             </div>
             <div>
               <label htmlFor="field1" className="block text-sm text-green-800 mb-2">Tanaman</label>
               <select onChange={handleChangeForm} name="jenisTanaman" className="w-full rounded-sm p-2 pr-4" >
                 <option value="0">Silahkan dipilih</option>
-                  {arrayFruit.map((frt,index) => {
-                      return (<option value={frt.id} key={index} name={index}>{frt.name}</option>)
+                  {komoditas.map((frt,index) => {
+                      return (<option value={frt.CommodityId} key={index} name={index}>{frt.name}</option>)
                   })}
               </select>
             </div>
             <div>
-              <label htmlFor="field2" className="block text-sm text-green-800 mb-2">Luas Ladang</label>
-              <input onChange={handleChangeForm} name="luasLadang" type="number" id="field2" className="w-full rounded-sm p-2" />
+              <label htmlFor="field2" className="block text-sm text-green-800 mb-2">Luas Ladang (m2)</label>
+              <input onChange={handleChangeForm} value={formDataLadang.luasLadang} name="luasLadang" type="number" id="field2" className="w-full rounded-sm p-2" />
             </div>
             <div>
               <label htmlFor="field3" className="block text-sm text-green-800 mb-2">Banyak Bibit</label>
-              <input onChange={handleChangeForm} name="jumlahTanaman" type="text" id="field3" className="w-full rounded-sm p-2" />
+              <input onChange={handleChangeForm} value={formDataLadang.jumlahTanaman} name="jumlahTanaman" type="text" id="field3" className="w-full rounded-sm p-2" />
+            </div>
+            <div>
+              <label htmlFor="field4" className="block text-sm text-green-800 mb-2">Durasi Hingga Panen (bulan)</label>
+              <input onChange={handleChangeForm} value={formDataLadang.durasiPanen} name="durasiPanen" type="text" id="field4" className="w-full rounded-sm p-2" />
             </div>
           </div>
         </div>

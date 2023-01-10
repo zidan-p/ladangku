@@ -3,6 +3,8 @@ import LadangAdd from "./LadangAdd";
 import LadangUpdate from "./LadangUpdate";
 import ButonForm from "../../../form/ButtonForm";
 import LoaderLadang from "../loader/LoaderLadang";
+import { addLadang } from "../../../../Service/pengelolaan/ladang";
+import { getLocalValue } from "../../../../features/auth/dataStorage";
 
 
 const arrayFruit = [
@@ -29,8 +31,12 @@ export default function LadangOperation(props){
   };
 
 
+  let handleSend;
   const sendData = () => {
-    console.log(currentData);
+    // console.log(currentData);
+    let userId = getLocalValue("user_id");
+
+    handleSend(userId,currentData,props.ladangLength);
     handleCloseForm()
   }
 
@@ -49,6 +55,7 @@ export default function LadangOperation(props){
       content = <LadangAdd collectData = {collectData}  />
       caseBtn = "add"
       title   = "Tambah Ladang"
+      handleSend = addLadang
       break
     case "update-ladang":
       content = <LadangUpdate collectData = {collectData} />

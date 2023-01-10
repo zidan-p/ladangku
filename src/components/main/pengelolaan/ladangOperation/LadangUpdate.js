@@ -18,7 +18,7 @@ export default function LadangUpdate(props){
     jenisTanaman  : "",
     luasLadang    : "",
     jumlahTanaman : "",
-    varietas      : "",
+    durasiPanen   : "",
   })
 
   const handleChangeForm = (event) => {
@@ -58,9 +58,9 @@ export default function LadangUpdate(props){
             <input onChange={handleChangeForm} name="jumlahTanaman" type="text" id="field3" className="w-full rounded-sm p-2" />
           </div>
           <div>
-            <label htmlFor="field4" className="block text-sm text-green-800 mb-2">Varietas</label>
-            <input onChange={handleChangeForm} name="varietas" type="text" id="field4" className="w-full rounded-sm p-2" />
-          </div>
+              <label htmlFor="field4" className="block text-sm text-green-800 mb-2">Durasi Hingga Panen</label>
+              <input onChange={handleChangeForm} name="durasiPanen" type="text" id="field4" className="w-full rounded-sm p-2" />
+            </div>
         </div>
       </div>
       <InformationField />

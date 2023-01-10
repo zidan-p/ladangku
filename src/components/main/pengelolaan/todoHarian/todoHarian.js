@@ -1,7 +1,9 @@
 import Todo from "./todoList/Todo"
 import Kalender from "./kalender/Kalender"
-import { useState } from "react"
-import { startOfDay, isEqual } from "date-fns"
+import { useEffect, useState } from "react"
+import { startOfDay, isEqual, parseISO, formatISO } from "date-fns"
+import { fetchTodoList } from "../../../../Service/pengelolaan/todoList"
+import { getLocalValue } from "../../../../features/auth/dataStorage"
 
 const todoMonth = [
     {
@@ -27,14 +29,48 @@ const todoMonth = [
     }
 ]
 
-const getTodoList = (date) =>{
-    return todoMonth.filter((td)=> isEqual(td.date, date))
-}
 
 
-export default function TodoHarian(){
 
+export default function TodoHarian({ todoListParent}){
+    let todos = todoListParent;
+    // const [todos, setTodos] = useState(todoListParent);
     const [selectedDate, setSelectedDate] = useState(startOfDay(new Date()));
+
+    const getTodoList = (date) =>{
+        console.log(todos);
+        // console.log(todos)
+        console.log(parseISO(todos[0]?.date))
+        let littlerBuffer;
+        let buffer = todos
+            .filter((td)=>{
+                // console.log(td);
+                // console.log(td.todo.date === formatISO(date));
+                // return isEqual(parseISO(td.todo.date),date)
+                littlerBuffer = parseISO(td.date)
+                if(
+                    (littlerBuffer.getMonth() == date.getMonth() ) &&
+                    (littlerBuffer.getDate() == date.getDate())
+                ){
+                    return true
+                }
+                return false
+            })
+            // .map(tod => {return tod.todo})
+
+        console.log(formatISO(date));
+        console.log(buffer);
+        return buffer
+    }
+
+    // useEffect(() => {
+    //     async function fetchTodo(){
+    //         let dt = await fetchTodoList(getLocalValue("user_id"), indexLadang);
+    
+    //         setTodos(dt);
+    //     }
+    //     fetchTodo();
+    // },[])
 
     const handleChangeSelectedDate = (date) => {
         setSelectedDate(startOfDay(date));

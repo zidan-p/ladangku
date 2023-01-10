@@ -1,4 +1,3 @@
-import Header from "../../header/Header"
 import TabLadang from "./tabLadang/TabLadang"
 import ProfileLadang from "./profileLadang/Profileladang"
 import JenisTumbuhan from "./jenisTumbuhan/JenisTumbuhan"
@@ -12,9 +11,8 @@ import Emptyladang from "./emptyLadang/emptyLadang"
 import LadangOperation from "./ladangOperation/LadangOperation"
 import Hapusladang from "./hapusladang/hapusLadang"
 import { getAllLadang } from "../../../Service/pengelolaan/ladang"
-import id from "date-fns/esm/locale/id/index.js"
 import { getLocalValue } from "../../../features/auth/dataStorage"
-import { convertLadangFormat } from "../../../utils/ladang/convertLadangFormat"
+import { convertBackendToFrontendLadangFormat } from "../../../utils/ladang/convertLadangFormat"
 
 
 
@@ -33,18 +31,19 @@ export default function PengelolaanMain(){
         let idUser = getLocalValue("user_id");
         async function setLadangFromFetch(){
             let result = await getAllLadang(idUser);
+            let formatedResult = result.data.map((arr) => convertBackendToFrontendLadangFormat(arr))
             if(result.success){
-                setLadangList(result.data.map((arr) => convertLadangFormat(arr)));
-                setActiveLadang(ladangList[0]);
+                setLadangList(formatedResult);
+                setActiveLadang(formatedResult[0]);
+                console.log("ladang list =====>",ladangList);
                 setIsLoading(false)
             }else{
 
             }
-            console.log(result.data.map((arr) => convertLadangFormat(arr)));
-            console.log("ladang list =====>",ladangList);
+            console.log(formatedResult);
         }
         setLadangFromFetch()
-    },[ladangList])
+    },[])
 
     const handleChangeLadang = (indexLadang) => {
         setOnTransition(true);
@@ -124,7 +123,7 @@ export default function PengelolaanMain(){
                     }
                     />
                 </section>
-                <TodoHarian idLadang={activeLadang} />
+                <TodoHarian idLadang={activeLadang} todoListParent={activeLadang.todoList} />
             </div>
         )
     } else{
@@ -160,7 +159,7 @@ export default function PengelolaanMain(){
             {ladangContent}
 
         </main>
-        <LadangOperation form={activeForm}  onClose={handleCloseForm} />
+        <LadangOperation form={activeForm}  onClose={handleCloseForm} ladangLength={ladangList.length} />
         </>
     )
 }

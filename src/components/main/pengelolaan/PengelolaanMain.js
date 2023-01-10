@@ -27,7 +27,10 @@ export default function PengelolaanMain(){
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect( ()=>{
-        console.log("ladang list seharusnya berubah");
+        handleRefreshData()
+    },[])
+
+    function handleRefreshData(){
         let idUser = getLocalValue("user_id");
         async function setLadangFromFetch(){
             let result = await getAllLadang(idUser);
@@ -35,7 +38,6 @@ export default function PengelolaanMain(){
             if(result.success){
                 setLadangList(formatedResult);
                 setActiveLadang(formatedResult[0]);
-                console.log("ladang list =====>",ladangList);
                 setIsLoading(false)
             }else{
 
@@ -43,7 +45,7 @@ export default function PengelolaanMain(){
             console.log(formatedResult);
         }
         setLadangFromFetch()
-    },[])
+    }
 
     const handleChangeLadang = (indexLadang) => {
         setOnTransition(true);
@@ -58,6 +60,7 @@ export default function PengelolaanMain(){
         form    : "add-ladang"
     })
     const handleCloseForm = () =>{
+        handleRefreshData();
         setActiveForm({
             active  : false, 
             form    : ""

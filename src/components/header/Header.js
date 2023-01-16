@@ -15,10 +15,13 @@ export default function Header(props){
             <div className="flex justify-between">
                 <h1 className="text-yellow-800 bg-yellow-200 text-lg font-bold px-3 rounded-sm">{props.children}</h1>
                 <div className="inline-flex">
-                    <div className=" rounded-l-full border py-1 px-4 bg-white px-3">
+                    <div className=" rounded-l border py-1 bg-white px-3">
                         {getLocalValue("first_name")}
                     </div>
-                    <button onClick={logout} className="bg-red-500 text-white py-1 hover:bg-red-600 active:bg-red-700 px-5 rounded-r-full">
+                    <div className=" border-y text-gray-500 py-1 bg-white px-3">
+                        {getLocalValue("email")}
+                    </div>
+                    <button onClick={logout} className="bg-red-500 text-white py-1 hover:bg-red-600 active:bg-red-700 px-5 rounded-r">
                         Logout
                     </button>
                 </div>

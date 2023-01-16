@@ -116,7 +116,9 @@ export default function PengelolaanMain(){
                     onShowDeleteLadang={handleShowDeleteLadang}
                     
                     />
-                    <TimeLine 
+                    <TimeLine
+                    tanggalTanam={activeLadang.profile.tanggalTanam}
+                    perkiraanPanen={activeLadang.profile.perkiraanPanen}
                     percent={
                         calculatePercent(
                             activeLadang.profile.tanggalTanam,

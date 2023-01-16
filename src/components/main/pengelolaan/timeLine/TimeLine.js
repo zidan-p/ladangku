@@ -1,4 +1,4 @@
-
+import { format } from "date-fns"
 
 
 export default function TimeLine(props){
@@ -12,15 +12,15 @@ export default function TimeLine(props){
                     "borderImage":`linear-gradient(90deg, #166534 ${props.percent}%, #e5e7eb 0 100%) 1`
                 }}
                 >
-                <p>15 Maret 2022</p>
+                <p>{format(props.tanggalTanam, "d MMMM R")}</p>
                 <div className="grow mx-2">
                     <p
                         style={{
                             "width" : `${props.percent}%`
                         }}
-                    className="text-right whitespace-nowrap">7 April 2022</p>
+                    className="text-right whitespace-nowrap">{format(new Date(), "d MMMM R")}</p>
                 </div>
-                <p>15 Juni 2022</p>
+                <p>{format(props.perkiraanPanen, "d MMMM R")}</p>
             </div>
         </div>
     )

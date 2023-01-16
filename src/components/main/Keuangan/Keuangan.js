@@ -44,7 +44,7 @@ export default function Keuangan(){
 
     return (
         <div className="bg-gray-100 w-full h-full">
-            <div className="h-full p-5">
+            <div className="h-full p-24">
                 <div class="">
                     <h1 className="bg-gray-50 text-3xl font-semibold px-6 border-b text-gray-700 py-3">Daftar Expektasi Hasil Tiap - Tiap Ladang</h1>
                     <table class="w-full text-sm text-left text-gray-500 ">

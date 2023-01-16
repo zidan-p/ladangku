@@ -65,6 +65,7 @@ export default function PengelolaanMain(){
             active  : false, 
             form    : ""
         })
+        handleRefreshData();
     }
     const handleShowUpdateLadang = () => setActiveForm({
         active  : true,

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import  ListTodo  from "./ListTodo"
 
 export default function CreateTodoList(props) {
@@ -12,9 +12,11 @@ export default function CreateTodoList(props) {
 
         setlistTodo([...listTodo, inputRef.current.value]);
         inputRef.current.value = ""
-
-        props.collectData("todoList", listTodo);
     }
+
+    useEffect(()=>{
+        props.collectData("todoList", listTodo);
+    },[listTodo])
 
     const handleDeletelist = (index) => {
         let buffArray = [...listTodo]

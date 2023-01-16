@@ -30,14 +30,23 @@ export default function LadangOperation(props){
     setLoading(true)
   };
 
-
   let handleSend;
-  const sendData = () => {
-    // console.log(currentData);
-    let userId = getLocalValue("user_id");
 
-    handleSend(userId,currentData,props.ladangLength);
-    handleCloseForm()
+  const inLoadingSend = async () => {
+    let userId = getLocalValue("user_id");
+    await handleSend(userId,currentData,props.ladangLength);
+    setCurrentData({});
+    props.onClose();
+    setLoading(false);
+  }
+
+  const handleInLoadingSendEvent = () => {
+    setLoading(true);
+  }
+
+  const sendData = () => {
+    inLoadingSend()
+    handleInLoadingSendEvent();
   }
 
   const collectData = (key,data) => {

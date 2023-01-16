@@ -33,7 +33,7 @@ export function convertBackendToFrontendLadangFormat(ladang){
             luasLadang      : ladang.luas_ladang,
             tanggalTanam    : parseISO(ladang.tanggal_tanam),
             perkiraanPanen  : parseISO(ladang.perkiraan_panen),
-            jenisKomoditas  : ladang.komoditas[0]?.name ?? "kosong",
+            jenisKomoditas  : ladang.komoditas[0]?.name ?? "Loading...",
             banyakTanaman   : ladang.luas_ladang * ladang.kepadatan_tanaman,
             umurTanaman     : intervalToDuration({
                 start           : parseISO(ladang.tanggal_tanam),

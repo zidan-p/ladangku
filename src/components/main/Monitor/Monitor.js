@@ -56,9 +56,19 @@ export default function Monitor(){
         //     </div>
         // </div>
 
-        <div className=" h-full flex flex-col overflow-y-auto bg-gray-100">
-            <div className="px-12 my-7 flex gap-3 h-full overflow-y-auto  py-2">
-                <div className="basis-2/3 bg-white p-3">
+        <div className=" h-full flex flex-col overflow-y-auto">
+            <div className="flex gap-3 h-full overflow-y-auto">
+                <div className="basis-1/3 flex flex-col overflow-y-auto bg-green-50 p-2">
+                    <h4 className="mb-2 font-semibold text-lg">Daftar Provinsi</h4>
+                    <div className="h-full overflow-y-auto">
+                        <div className="grid grid-cols-1 gap-2 pr-2">
+                            {hargaDagang.map((dagangan,i) => {
+                                return <ProvinceList handleOnClick={handleChangeActive} name={dagangan.name} idProvinsi={i} key={i}/>
+                            })}
+                        </div>
+                    </div>
+                </div>
+                <div className="basis-2/3 bg-white p-3 px-10">
                 <img className="w-full" src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Indonesia_provinces_blank_map.svg" />
                     <div className="">
                         { activeRegion === null
@@ -67,18 +77,7 @@ export default function Monitor(){
                         }
                     </div>
                 </div>
-                <div className="basis-1/3 overflow-y-auto bg-white p-2">
-                    <h4 className="mb-2 font-semibold text-lg">Daftar Provinsi</h4>
-                    <div className="h-full overflow-y-auto">
-                        <div className="grid grid-cols-1 gap-2">
-                            {hargaDagang.map((dagangan,i) => {
-                                return <ProvinceList handleOnClick={handleChangeActive} name={dagangan.name} idProvinsi={i} key={i}/>
-                            })}
-                        </div>
-                    </div>
-
-                </div>
-            
+                
             </div>
         </div>
     )
